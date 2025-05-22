@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pasar Hewan - Temukan Sahabat Terbaik Anda</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Custom CSS untuk gambar cover di Hero Section */
+        .hero-section {
+            background-image: linear-gradient(to right bottom, rgba(79, 70, 229, 0.7), rgba(239, 68, 68, 0.7)), url('https://source.unsplash.com/random/1600x900/?happy-pets,playful-animals,dog-cat-joy'); /* Gradien dan gambar random yang ceria */
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Styling untuk scrollbar (opsional, untuk tampilan lebih bersih) */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f0f4f8; /* Lebih cerah */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #a78bfa; /* Warna ungu cerah */
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #8b5cf6; /* Ungu sedikit lebih gelap saat hover */
+        }
+
+        /* --- Custom Animations (jika tidak menggunakan tailwind.config.js) --- */
+        /* Jika kamu menggunakan tailwind.config.js, hapus bagian ini */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.1); opacity: 0; }
+            60% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes pulseEffect {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.9; }
+        }
+
+        .animate-fade-in-down { animation: fadeInDown 0.7s ease-out forwards; }
+        .animate-fade-in-up { animation: fadeInUp 0.7s ease-out forwards; }
+        .animate-zoom-in { animation: zoomIn 0.6s ease-out forwards; }
+        .animate-bounce-in { animation: bounceIn 0.8s ease-out forwards; }
+        .animate-slide-in-left { animation: slideInLeft 0.7s ease-out forwards; }
+        .animate-slide-in-right { animation: slideInRight 0.7s ease-out forwards; }
+        .animate-pulse-effect { animation: pulseEffect 2s infinite ease-in-out; }
+
+        /* Untuk efek scroll-reveal */
+        .reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800 bg-blue-50">
+
+    <nav class="bg-gradient-to-r from-blue-500 to-purple-600 p-4 shadow-xl sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="navbar-brand text-white text-3xl font-extrabold tracking-wide">
+                <a href="#" class="hover:text-yellow-300 transition duration-300 ease-in-out transform hover:scale-105">Pasar Hewan</a>
+            </div>
+            <ul class="hidden md:flex space-x-8">
+                <li><a href="#beranda" class="text-white text-lg font-medium hover:text-yellow-300 transition duration-300 ease-in-out relative group">
+                    Beranda
+                    <span class="absolute left-0 bottom-0 w-full h-0.5 bg-yellow-300 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
+                </a></li>
+                <li><a href="#produk" class="text-white text-lg font-medium hover:text-yellow-300 transition duration-300 ease-in-out relative group">
+                    Produk Kami
+                    <span class="absolute left-0 bottom-0 w-full h-0.5 bg-yellow-300 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
+                </a></li>
+                <li><a href="#tentang" class="text-white text-lg font-medium hover:text-yellow-300 transition duration-300 ease-in-out relative group">
+                    Tentang Kami
+                    <span class="absolute left-0 bottom-0 w-full h-0.5 bg-yellow-300 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
+                </a></li>
+                <li><a href="#kontak" class="text-white text-lg font-medium hover:text-yellow-300 transition duration-300 ease-in-out relative group">
+                    Kontak
+                    <span class="absolute left-0 bottom-0 w-full h-0.5 bg-yellow-300 scale-x-0 group-hover:scale-x-100 transition-transform duration-300 ease-out"></span>
+                </a></li>
+            </ul>
+
+            <div class="md:hidden">
+                <button id="hamburger-button" class="text-white focus:outline-none focus:ring-2 focus:ring-yellow-300 rounded-md">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-purple-700 mt-4 py-2 rounded-md shadow-lg">
+            <ul class="flex flex-col items-center space-y-4">
+                <li><a href="#beranda" class="block text-white text-lg font-medium hover:text-yellow-300 transition duration-300 ease-in-out py-2" onclick="mobileMenu.classList.add('hidden')">Beranda</a></li>
+                <li><a href="#produk" class="block text-white text-lg font-medium hover:text-yellow-300 transition duration-300 ease-in-out py-2" onclick="mobileMenu.classList.add('hidden')">Produk Kami</a></li>
+                <li><a href="#tentang" class="block text-white text-lg font-medium hover:text-yellow-300 transition duration-300 ease-in-out py-2" onclick="mobileMenu.classList.add('hidden')">Tentang Kami</a></li>
+                <li><a href="#kontak" class="block text-white text-lg font-medium hover:text-yellow-300 transition duration-300 ease-in-out py-2" onclick="mobileMenu.classList.add('hidden')">Kontak</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    ---
+
+    <section class="hero-section relative h-screen flex items-center justify-center text-center px-4 overflow-hidden" id="beranda">
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-60"></div>
+        <div class="hero-content relative z-10 text-white max-w-4xl mx-auto p-4 md:p-8 backdrop-blur-sm bg-black bg-opacity-20 rounded-xl shadow-2xl">
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight mb-6 animate-fade-in-down drop-shadow-lg">Temukan Sahabat Terbaik Anda di <span class="text-yellow-300">Pasar Hewan</span></h1>
+            <p class="text-base sm:text-lg md:text-xl font-light mb-10 opacity-0 animate-fade-in-up" style="animation-delay: 0.5s;">Berbagai jenis hewan anomali peliharaan sehat dan terawat siap menjadi bagian dari keluarga Anda dengan penuh kebahagiaan!</p>
+            <a href="#produk" class="inline-flex items-center bg-yellow-400 text-blue-800 px-8 py-4 rounded-full text-lg font-semibold shadow-xl hover:bg-yellow-300 transform hover:scale-105 transition duration-300 ease-in-out opacity-0 animate-zoom-in group" style="animation-delay: 1s;">
+                Lihat Koleksi Kami
+                <i class="fas fa-arrow-right ml-3 group-hover:translate-x-1 transition-transform duration-300"></i>
+            </a>
+            <div class="mt-8 flex justify-center space-x-6">
+                <a href="#tentang" class="text-white hover:text-yellow-300 transition duration-300 flex items-center group">
+                    <i class="fas fa-question-circle text-2xl mr-2 group-hover:animate-pulse-effect"></i>
+                    <span class="border-b-2 border-transparent group-hover:border-yellow-300 transition-colors duration-300">Mengapa Kami?</span>
+                </a>
+                <a href="#kontak" class="text-white hover:text-yellow-300 transition duration-300 flex items-center group">
+                    <i class="fas fa-phone-alt text-2xl mr-2 group-hover:animate-pulse-effect"></i>
+                    <span class="border-b-2 border-transparent group-hover:border-yellow-300 transition-colors duration-300">Hubungi Kami</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    ---
+
+    <section class="py-16 md:py-24 bg-blue-50 relative overflow-hidden" id="produk">
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-100 to-purple-50 transform -skew-y-3 scale-110 z-0"></div>
+        <div class="container mx-auto px-4 relative z-10 reveal">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-6 text-blue-800 animate-slide-in-down">Hewan Peliharaan Unggulan</h2>
+            <p class="text-xl text-center text-gray-700 mb-16 max-w-2xl mx-auto animate-slide-in-up" style="animation-delay: 0.2s;">Pilihan hewan-hewan terbaik yang siap Anda adopsi dan berikan kasih sayang tak terbatas.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <div class="product-card bg-white rounded-xl shadow-2xl overflow-hidden transform hover:scale-105 transition duration-300 ease-in-out reveal">
+                    <div class="product-image-wrapper h-60 overflow-hidden relative">
+                        <img src="IMAGE/monyet.jpg" alt="Monyet Cerdas - Mekanik & Peliharaan" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500 ease-in-out">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-40"></div>
+                        <span class="absolute top-4 right-4 bg-yellow-400 text-blue-800 text-sm font-bold px-3 py-1 rounded-full shadow-md">Populer!</span>
+                    </div>
+                    <div class="product-info p-6">
+                        <h3 class="text-2xl font-bold mb-2 text-blue-800">Monyet Cerdas</h3>
+                        <p class="text-gray-600 mb-4 text-base">Monyet lincah, cerdas, dan handal menjadi mekanik cocok untuk Anda yang mencari Mekanik serta peliharaan.</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="price text-purple-700 text-3xl font-extrabold">Rp 1.000.000</span>
+                            <div class="text-yellow-500">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                        <a href="#" class="btn-secondary block w-full text-center bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition duration-300 ease-in-out flex items-center justify-center space-x-2 group">
+                            Detail & Adopsi
+                            <i class="fas fa-arrow-circle-right group-hover:translate-x-1 transition-transform duration-300"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="product-card bg-white rounded-xl shadow-2xl overflow-hidden transform hover:scale-105 transition duration-300 ease-in-out reveal" style="transition-delay: 0.1s;">
+                    <div class="product-image-wrapper h-60 overflow-hidden relative">
+                        <img src="IMAGE/tings.jpg" alt="Monyet Birahi - Siap Membuahi Betina" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500 ease-in-out">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-40"></div>
+                        <span class="absolute top-4 right-4 bg-red-400 text-white text-sm font-bold px-3 py-1 rounded-full shadow-md">Limited!</span>
+                    </div>
+                    <div class="product-info p-6">
+                        <h3 class="text-2xl font-bold mb-2 text-blue-800">Monyet Birahi</h3>
+                        <p class="text-gray-600 mb-4 text-base">Monyet Depok yang sedang birahi siap membuahi para betina.</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="price text-purple-700 text-3xl font-extrabold">Rp 800.000</span>
+                            <div class="text-yellow-500">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>
+                            </div>
+                        </div>
+                        <a href="#" class="btn-secondary block w-full text-center bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition duration-300 ease-in-out flex items-center justify-center space-x-2 group">
+                            Detail & Adopsi
+                            <i class="fas fa-arrow-circle-right group-hover:translate-x-1 transition-transform duration-300"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="product-card bg-white rounded-xl shadow-2xl overflow-hidden transform hover:scale-105 transition duration-300 ease-in-out reveal" style="transition-delay: 0.2s;">
+                    <div class="product-image-wrapper h-60 overflow-hidden relative">
+                        <img src="IMAGE/peri.jpg" alt="Anjing Golden - Setia & Ramah" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500 ease-in-out">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-40"></div>
+                    </div>
+                    <div class="product-info p-6">
+                        <h3 class="text-2xl font-bold mb-2 text-blue-800">Anjing Setia</h3>
+                        <p class="text-gray-600 mb-4 text-base">Golden Retriever yang ramah dan setia, sahabat terbaik untuk keluarga Anda.</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="price text-purple-700 text-3xl font-extrabold">Rp 1.500.000</span>
+                            <div class="text-yellow-500">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <a href="#" class="btn-secondary block w-full text-center bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition duration-300 ease-in-out flex items-center justify-center space-x-2 group">
+                            Detail & Adopsi
+                            <i class="fas fa-arrow-circle-right group-hover:translate-x-1 transition-transform duration-300"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="product-card bg-white rounded-xl shadow-2xl overflow-hidden transform hover:scale-105 transition duration-300 ease-in-out reveal" style="transition-delay: 0.3s;">
+                    <div class="product-image-wrapper h-60 overflow-hidden relative">
+                        <img src="IMAGE/supss.jpg" alt="Kadal Jangkung" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500 ease-in-out">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-40"></div>
+                    </div>
+                    <div class="product-info p-6">
+                        <h3 class="text-2xl font-bold mb-2 text-blue-800">Kadal Jangkung</h3>
+                        <p class="text-gray-600 mb-4 text-base">Kadal yang dapat berkamuflase dan Penakut.</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="price text-purple-700 text-3xl font-extrabold">Rp 750.000</span>
+                            <div class="text-yellow-500">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+                            </div>
+                        </div>
+                        <a href="#" class="btn-secondary block w-full text-center bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition duration-300 ease-in-out flex items-center justify-center space-x-2 group">
+                            Detail & Adopsi
+                            <i class="fas fa-arrow-circle-right group-hover:translate-x-1 transition-transform duration-300"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="product-card bg-white rounded-xl shadow-2xl overflow-hidden transform hover:scale-105 transition duration-300 ease-in-out reveal" style="transition-delay: 0.4s;">
+                    <div class="product-image-wrapper h-60 overflow-hidden relative">
+                        <img src="IMAGE/oteng.jpg" alt="Tikus Got Asia" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500 ease-in-out">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-40"></div>
+                    </div>
+                    <div class="product-info p-6">
+                        <h3 class="text-2xl font-bold mb-2 text-blue-800">Tikus Got Asia</h3>
+                        <p class="text-gray-600 mb-4 text-base">Tikus Got Asia Untuk Pakan Ular.</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="price text-purple-700 text-3xl font-extrabold">Rp 250.000</span>
+                            <div class="text-yellow-500">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+                            </div>
+                        </div>
+                        <a href="#" class="btn-secondary block w-full text-center bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition duration-300 ease-in-out flex items-center justify-center space-x-2 group">
+                            Detail & Adopsi
+                            <i class="fas fa-arrow-circle-right group-hover:translate-x-1 transition-transform duration-300"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="product-card bg-white rounded-xl shadow-2xl overflow-hidden transform hover:scale-105 transition duration-300 ease-in-out reveal" style="transition-delay: 0.5s;">
+                    <div class="product-image-wrapper h-60 overflow-hidden relative">
+                        <img src="IMAGE/inod.jpg" alt="Kerbau Hitam Legam" class="w-full h-full object-cover transform group-hover:scale-110 transition duration-500 ease-in-out">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-40"></div>
+                    </div>
+                    <div class="product-info p-6">
+                        <h3 class="text-2xl font-bold mb-2 text-blue-800">Kerbau Hitam Legam</h3>
+                        <p class="text-gray-600 mb-4 text-base">Kerbau hitam multifungsi bisa untuk disembelih maupun dimanfaatkan tenaganya.</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="price text-purple-700 text-3xl font-extrabold">Rp 150.000</span>
+                            <div class="text-yellow-500">
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>
+                            </div>
+                        </div>
+                        <a href="#" class="btn-secondary block w-full text-center bg-purple-600 text-white py-3 rounded-lg hover:bg-purple-700 transition duration-300 ease-in-out flex items-center justify-center space-x-2 group">
+                            Detail & Adopsi
+                            <i class="fas fa-arrow-circle-right group-hover:translate-x-1 transition-transform duration-300"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    ---
+
+    <section class="py-16 md:py-24 bg-gradient-to-br from-yellow-50 to-orange-100 relative overflow-hidden" id="tentang">
+        <div class="absolute top-0 left-0 w-32 h-32 bg-yellow-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob"></div>
+        <div class="absolute bottom-0 right-0 w-48 h-48 bg-purple-300 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000"></div>
+
+        <div class="container mx-auto px-4 relative z-10 reveal">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-12 text-orange-700 animate-bounce-in">Mengapa Memilih Pasar Hewan?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="about-item bg-white p-8 rounded-xl shadow-xl text-center transform hover:shadow-2xl hover:scale-105 transition duration-300 ease-in-out border-b-4 border-yellow-400 reveal">
+                    <i class="fas fa-heartbeat text-red-500 text-6xl mb-4 animate-pulse-effect"></i>
+                    <h3 class="text-2xl font-bold mb-3 text-gray-900">Hewan Sehat & Terawat</h3>
+                    <p class="text-gray-600">Semua hewan dijamin dalam kondisi sehat, sudah divaksin, dan terawat dengan baik.</p>
+                </div>
+                <div class="about-item bg-white p-8 rounded-xl shadow-xl text-center transform hover:shadow-2xl hover:scale-105 transition duration-300 ease-in-out border-b-4 border-blue-400 reveal" style="transition-delay: 0.1s;">
+                    <i class="fas fa-paw text-blue-500 text-6xl mb-4 animate-pulse-effect" style="animation-delay: 0.2s;"></i>
+                    <h3 class="text-2xl font-bold mb-3 text-gray-900">Pilihan Beragam</h3>
+                    <p class="text-gray-600">Dari anjing, kucing, Kadal, hingga Tikus, kami punya berbagai jenis hewan yang Anda cari.</p>
+                </div>
+                <div class="about-item bg-white p-8 rounded-xl shadow-xl text-center transform hover:shadow-2xl hover:scale-105 transition duration-300 ease-in-out border-b-4 border-green-400 reveal" style="transition-delay: 0.2s;">
+                    <i class="fas fa-handshake text-green-500 text-6xl mb-4 animate-pulse-effect" style="animation-delay: 0.4s;"></i>
+                    <h3 class="text-2xl font-bold mb-3 text-gray-900">Proses Adopsi Mudah</h3>
+                    <p class="text-gray-600">Kami memastikan proses adopsi yang transparan dan mudah, dengan panduan lengkap.</p>
+                </div>
+                <div class="about-item bg-white p-8 rounded-xl shadow-xl text-center transform hover:shadow-2xl hover:scale-105 transition duration-300 ease-in-out border-b-4 border-purple-400 reveal" style="transition-delay: 0.3s;">
+                    <i class="fas fa-life-ring text-purple-500 text-6xl mb-4 animate-pulse-effect" style="animation-delay: 0.6s;"></i>
+                    <h3 class="text-2xl font-bold mb-3 text-gray-900">Dukungan Purna Jual</h3>
+                    <p class="text-gray-600">Tim ahli kami siap memberikan konsultasi dan dukungan setelah Anda mengadopsi hewan.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    ---
+
+    <section class="cta-section bg-gradient-to-br from-indigo-600 to-pink-500 py-20 text-white text-center shadow-inner relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full opacity-20" style="background-image: url('https://www.transparenttextures.com/patterns/cubes.png');"></div>
+        <div class="container mx-auto px-4 relative z-10 reveal">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6 animate-slide-in-left">Siap Menemukan Sahabat Baru Anda?</h2>
+            <p class="text-lg md:text-xl mb-10 opacity-90 max-w-3xl mx-auto animate-slide-in-right" style="animation-delay: 0.2s;">Jelajahi koleksi lengkap kami atau hubungi tim kami untuk konsultasi pribadi dan memulai perjalanan baru bersama hewan peliharaan impian Anda!</p>
+            <a href="https://wa.me/+6287887406727" target="_blank" rel="noopener noreferrer" class="inline-flex items-center bg-yellow-400 text-indigo-800 px-10 py-4 rounded-full text-xl font-semibold shadow-xl hover:bg-yellow-300 transform hover:scale-105 transition duration-300 ease-in-out group animate-zoom-in" style="animation-delay: 0.4s;">
+                <i class="fab fa-whatsapp text-2xl mr-3"></i>
+                Hubungi Kami Sekarang
+                <i class="fas fa-paper-plane ml-3 group-hover:rotate-12 transition-transform duration-300"></i>
+            </a>
+        </div>
+    </section>
+
+    ---
+
+    <footer class="footer bg-gray-900 text-gray-300 py-12" id="kontak">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-gray-700">
+                <div class="footer-brand text-center md:text-left reveal">
+                    <h3 class="text-3xl font-extrabold text-yellow-300 mb-4 animate-slide-in-left">Pasar Hewan</h3>
+                    <p class="text-gray-400">Tempat terbaik untuk menemukan teman berbulu, bersisik, atau bersayap yang membawa kebahagiaan ke rumah Anda.</p>
+                </div>
+                <div class="footer-links text-center md:text-left reveal" style="transition-delay: 0.1s;">
+                    <h4 class="text-xl font-semibold text-white mb-4">Tautan Cepat</h4>
+                    <ul>
+                        <li class="mb-2"><a href="#beranda" class="hover:text-yellow-300 transition duration-200 ease-in-out flex items-center justify-center md:justify-start"><i class="fas fa-home mr-2 text-purple-400"></i> Beranda</a></li>
+                        <li class="mb-2"><a href="#produk" class="hover:text-yellow-300 transition duration-200 ease-in-out flex items-center justify-center md:justify-start"><i class="fas fa-store mr-2 text-purple-400"></i> Produk</a></li>
+                        <li class="mb-2"><a href="#tentang" class="hover:text-yellow-300 transition duration-200 ease-in-out flex items-center justify-center md:justify-start"><i class="fas fa-info-circle mr-2 text-purple-400"></i> Tentang Kami</a></li>
+                        <li class="mb-2"><a href="#kontak" class="hover:text-yellow-300 transition duration-200 ease-in-out flex items-center justify-center md:justify-start"><i class="fas fa-envelope mr-2 text-purple-400"></i> Kontak</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact text-center md:text-left reveal" style="transition-delay: 0.2s;">
+                    <h4 class="text-xl font-semibold text-white mb-4">Kontak Kami</h4>
+                    <p class="flex items-center justify-center md:justify-start mb-2 text-gray-400"><i class="fas fa-map-marker-alt text-yellow-400 mr-3"></i> Jl. Kebun Binatang No. 123, Jakarta</p>
+                    <p class="flex items-center justify-center md:justify-start mb-2 text-gray-400"><i class="fas fa-phone text-yellow-400 mr-3"></i> +62 812-3456-7890</p>
+                    <p class="flex items-center justify-center md:justify-start text-gray-400"><i class="fas fa-envelope text-yellow-400 mr-3"></i> info@pasarhewan.com</p>
+                    <div class="social-icons mt-4 flex justify-center md:justify-start space-x-4 text-2xl">
+                        <a href="#" class="text-gray-400 hover:text-white transform hover:scale-110 transition duration-200"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transform hover:scale-110 transition duration-200"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transform hover:scale-110 transition duration-200"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-white transform hover:scale-110 transition duration-200"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom text-center pt-8 text-gray-500 reveal" style="transition-delay: 0.3s;">
+                <p>&copy; 2025 Pasar Hewan. Hak Cipta Dilindungi. Dibuat dengan <i class="fas fa-heart text-red-500 animate-pulse-effect"></i> dan <i class="fab fa-tailwind text-blue-400"></i>.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // JavaScript untuk toggle mobile menu
+        const hamburgerButton = document.getElementById('hamburger-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        hamburgerButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Menutup mobile menu ketika link diklik
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // --- JavaScript untuk Scroll Reveal Animation ---
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const observerOptions = {
+            root: null, /* viewport */
+            rootMargin: '0px',
+            threshold: 0.1 /* memicu saat 10% elemen terlihat */
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target); // Hentikan observasi setelah diaktifkan
+                }
+            });
+        }, observerOptions);
+
+        revealElements.forEach(element => {
+            observer.observe(element);
+        });
+
+        // Animasi Hero Section saat dimuat
+        const heroContent = document.querySelector('.hero-content');
+        heroContent.querySelectorAll('h1, p, a, div.flex').forEach(element => {
+            element.classList.add('opacity-0');
+        });
+        window.addEventListener('load', () => {
+            heroContent.querySelector('h1').classList.remove('opacity-0');
+            heroContent.querySelector('h1').classList.add('animate-fade-in-down');
+            heroContent.querySelector('p').classList.remove('opacity-0');
+            heroContent.querySelector('p').classList.add('animate-fade-in-up');
+            heroContent.querySelector('a').classList.remove('opacity-0');
+            heroContent.querySelector('a').classList.add('animate-zoom-in');
+            // Menambahkan animasi untuk tombol tambahan di hero section
+            const extraButtons = heroContent.querySelector('.mt-8');
+            if (extraButtons) {
+                extraButtons.classList.remove('opacity-0');
+                extraButtons.classList.add('animate-fade-in-up');
+                extraButtons.style.animationDelay = '1.2s';
+            }
+        });
+    </script>
+</body>
+</html>
